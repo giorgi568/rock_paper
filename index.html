@@ -5,8 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rock paper scissors</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div> play up to five games of rock, paper scissors against computer!</div>
+    <button id="rock"> rock </button>
+    <button id="paper"> paper </button>
+    <button id="scissors"> scissors </button>
+    <div id="results"></div>
+
     <script>
         function getComputerChoice(){
             let n = Math.floor(Math.random()*3);
@@ -27,55 +34,112 @@
         // const computerSelection = getComputerChoice();
         let countwin = 0;
         let countlose = 0;
+        let gamePlayed = 0;
         // console.log(playerSelection);
         // console.log(computerSelection);
-        console.log(game());
+
+        // console.log(game());
+        const results = document.querySelector('#results');
 
         function playRound(playerSelection, computerSelection){
+            // restart classes so it doest stay same color affter first addclass
+            results.classList.remove('finalWin');
+            results.classList.remove('finalDraw');
+            results.classList.remove('finalLoss');
+
+            
+            
             playerSelection = playerSelection.toLowerCase();
             if (playerSelection == computerSelection){
+                gamePlayed++;
+                results.textContent = `draw -- computer: ${countlose} : ${countwin} you`;
+                game();
                 // return "draw"
             }else if(playerSelection=="rock" && computerSelection=="paper"){
+                gamePlayed++;
                 countlose++;
+                results.textContent = `computer:${countlose} : ${countwin} you `;
+                game();
                 // return "you lose! paper beats rock"
             }else if(playerSelection=="rock" && computerSelection=="scissors"){
+                gamePlayed++;
                 countwin++;
+                results.textContent = `computer:${countlose} : ${countwin} you `;
+                game();
                 // return "you win! rock beats scissors"
             }else if (playerSelection=="paper" && computerSelection=="rock"){
+                gamePlayed++;
                 countwin++;
+                results.textContent = `computer:${countlose} : ${countwin} you `;
+                game();
                 // return "you win! paper beats rock"
             }else if (playerSelection=="paper" && computerSelection=="scissors"){
+                gamePlayed++;
                 countlose++;
+                results.textContent = `computer:${countlose} : ${countwin} you `;
+                game();
                 // return "you lose! scissors beats paper"
             }else if (playerSelection=="scissors" && computerSelection=="paper"){
+                gamePlayed++;
                 countwin++;
+                results.textContent = `computer:${countlose} : ${countwin} you `;
+                game();
                 // return "you win! scissors beats paper"
             }else if (playerSelection=="scissors" && computerSelection=="rock"){
+                gamePlayed++;
                 countlose++;
+                results.textContent = `computer:${countlose} : ${countwin} you `;
+                game();
                 // return "you lose! rock beats scissors"
             }
 
         }
 
         function game(){
-            for (let i = 0; i<5; i++){
-                const playerSelection = prompt("please enter your choice");
-                const computerSelection = getComputerChoice();
-                playRound(playerSelection, computerSelection);
-                console.log(playerSelection + "  " + computerSelection);
+            // for (let i = 0; i<5; i++){
+            //     const playerSelection = prompt("please enter your choice");
+            //     const computerSelection = getComputerChoice();
+            //     playRound(playerSelection, computerSelection);
+            //     console.log(playerSelection + "  " + computerSelection);
 
-            }
-            console.log()
-            if (countwin > countlose ){
-                return "congragulations! you have won"
-            }else if(countwin == countlose) {
-                return "its draw"
-            }
-            else{
-                return "you lost"
+            // }
+            // console.log()
+            if(gamePlayed === 5){
+                if (countwin > countlose ){
+                    // return "congragulations! you have won"
+                    results.textContent =  "congragulations! you have won";
+                    results.classList.add('finalWin');
+                    results
+                    countwin = 0;
+                    countlose = 0;
+                    gamePlayed = 0;
+                }else if(countwin == countlose) {
+                    // return "its draw"
+                    results.textContent =  "its a draw";
+                    results.classList.add('finalDraw');
+                    countwin = 0;
+                    countlose = 0;
+                    gamePlayed = 0;
+                }
+                else{
+                    // return "you lost"
+                    results.textContent =  "you lost";
+                    results.classList.add('finalLoss');
+                    countwin = 0;
+                    countlose = 0;
+                    gamePlayed = 0;
+                }
             }
         }
 
+
+        const rock = document.querySelector('#rock');
+        rock.addEventListener('click',() => playRound("rock", getComputerChoice()));
+        const paper = document.querySelector('#paper');
+        paper.addEventListener('click',() => playRound("paper", getComputerChoice()));
+        const scissors = document.querySelector('#scissors');
+        scissors.addEventListener('click',() => playRound("scissors", getComputerChoice()));
+
     </script>
 </body>
-</html>
+<!-- </html> -->
